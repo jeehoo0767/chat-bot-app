@@ -1,13 +1,13 @@
 import {
-    SAVE_MESSAGE,
+    SAMPLE,
 } from '../_actions/types';
 
 export default function (state = {messages:[]}, action) {
     switch (action.type) {
-        case SAVE_MESSAGE:
+        case SAMPLE:
             return {
                 ...state,
-                messages: state.messages.concat(action.payload)
+                messages: state
             }
         default:
             return state;
