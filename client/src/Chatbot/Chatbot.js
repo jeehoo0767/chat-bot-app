@@ -20,7 +20,7 @@ function Chatbot() {
 
         // 챗봇이 보낸 메세지를 관리.
         try {
-            const response = await Axios.post('/api/dialog/textQuery', textQueryVariables)
+            const response = await Axios.post('/api/dialogflow/textQuery', textQueryVariables)
             const content = response.data.fulfillmentMessages[0]
 
             conversation = {
