@@ -29,13 +29,16 @@ function Chatbot() {
         // 챗봇이 보낸 메세지를 관리.
         try {
             const response = await Axios.post('/api/dialogflow/textQuery', textQueryVariables)
-            const content = response.data.fulfillmentMessages[0]
 
-            conversation = {
-                who : 'bot',
-                content : content
+            for(let content of response.data.fulfillmentMessages) {
+                let conversation = {
+                    who : 'bot',
+                    content : content
+                }
+                dispatch(saveMessage(conversation))
+                
             }
-            dispatch(saveMessage(conversation))
+
         } catch(error) {
             conversation = {
                 who : 'user',
@@ -58,13 +61,14 @@ function Chatbot() {
         // 챗봇이 보낸 메세지를 관리.
         try {
             const response = await Axios.post('/api/dialogflow/eventQuery', eventQueryVariables)
-            const content = response.data.fulfillmentMessages[0]
-
-            let conversation = {
-                who : 'bot',
-                content : content
+            for(let content of response.data.fulfillmentMessages) {
+                let conversation = {
+                    who : 'bot',
+                    content : content
+                }
+                dispatch(saveMessage(conversation))
+                
             }
-            dispatch(saveMessage(conversation))
         } catch(error) {
             let conversation = {
                 who : 'user',
