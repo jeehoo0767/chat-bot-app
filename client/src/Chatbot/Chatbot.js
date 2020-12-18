@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-import { saveMessage } from '../_actions/message_actions'
+import { saveMessage } from '../_actions/message_actions';
+import Message from './Section/Message'
 function Chatbot() {
     const dispatch = useDispatch();
+    const messagesFromRdux = useSelector(state => state.message.messages)
 
     useEffect(() => {
         eventQuery('welcomeToMyWebsite');
@@ -90,10 +92,27 @@ function Chatbot() {
         }
     }
 
+    const renderOneMessage = (message, i) => {
+        console.log(message);
+        return <Message key={i} who={message.who} text={message.content.text.text}/>
+        }
+    
+    
+
+    const renderMessage = (returnMessages) => {
+        if(returnMessages) {
+            return returnMessages.map((message, i) => {
+                return renderOneMessage(message, i)
+            })
+        } else {
+            return null;
+        }
+    }
+
     return (
         <div style={{ height : 700, width : 700, border : '3px solid black', borderRadius : '7px'}}>
             <div style={{ height : 644, width : '100%', overflow : 'auto' }}>
-
+                {renderMessage(messagesFromRdux)}
             </div>
             <input 
                 style={{ margin : 0, width : '100%', height : 50, 
