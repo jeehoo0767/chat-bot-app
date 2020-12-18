@@ -41,6 +41,35 @@ function Chatbot() {
         }
     }
 
+    const eventQuery = async (event) => {
+       
+        const eventQueryVariables ={
+            event
+        }
+
+        // 챗봇이 보낸 메세지를 관리.
+        try {
+            const response = await Axios.post('/api/dialogflow/eventQuery', eventQueryVariables)
+            const content = response.data.fulfillmentMessages[0]
+
+            let conversation = {
+                who : 'bot',
+                content : content
+            }
+            console.log(conversation)
+        } catch(error) {
+            let conversation = {
+                who : 'user',
+                content : { // 우리가 보낸 text
+                    text : {
+                        text : " Error just occured, please check the problem"
+                    }
+                }
+            }
+            console.log(conversation)
+        }
+    }
+
     const keyPressHandler = (e) => {
         if(e.key === "Enter") {
             if(!e.target.value) {
