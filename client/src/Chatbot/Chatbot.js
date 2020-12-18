@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Axios from 'axios'
 
 function Chatbot() {
+
+    useEffect(() => {
+        eventQuery('welcomeToMyWebsite');
+    }, [])
 
     const textQuery = async (text) => {
         // 우리가 보낸 메세지를 관리 한다.
