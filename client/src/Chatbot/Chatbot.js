@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import { saveMessage } from '../_actions/message_actions';
 import Message from './Section/Message'
+import { List, Icon, Avatar } from 'antd';
 function Chatbot() {
     const dispatch = useDispatch();
     const messagesFromRdux = useSelector(state => state.message.messages)
@@ -96,9 +97,33 @@ function Chatbot() {
         }
     }
 
+    const renderCards = (cards) => {
+        return cards.map((card, i) => <Card key={i} cardInfo={card.structValue}/>)
+    }
+
     const renderOneMessage = (message, i) => {
         console.log(message);
+
+        // Template for normal text
+        if(message.content && message.content.text && message.content.text.text){
         return <Message key={i} who={message.who} text={message.content.text.text}/>
+        } else if(message.content && message.content.payload.fields.card) {
+
+            const AvatarSrc = message.who ==='bot' ? <Icon type="robot" /> : <Icon type="smile" />
+
+            return <div>
+                <List.Item style={{ padding : '1rem'}} >
+                <List.Item.Meta
+                    avatar={<Avatar icon={AvatarSrc}/>}
+                    title={message.who}
+                    description={renderCards(message.content.payload.fields.card.listValue.values)}
+                />
+                </List.Item>
+                </div>
+        }
+
+        //template for card message
+
         }
     
     
