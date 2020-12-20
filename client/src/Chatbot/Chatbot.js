@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import { saveMessage } from '../_actions/message_actions';
 import Message from './Section/Message'
+import Card from './Section/Card'
 import { List, Icon, Avatar } from 'antd';
 function Chatbot() {
     const dispatch = useDispatch();
@@ -108,6 +109,7 @@ function Chatbot() {
         if(message.content && message.content.text && message.content.text.text){
         return <Message key={i} who={message.who} text={message.content.text.text}/>
         } else if(message.content && message.content.payload.fields.card) {
+            //template for card message
 
             const AvatarSrc = message.who ==='bot' ? <Icon type="robot" /> : <Icon type="smile" />
 
@@ -122,7 +124,6 @@ function Chatbot() {
                 </div>
         }
 
-        //template for card message
 
         }
     
